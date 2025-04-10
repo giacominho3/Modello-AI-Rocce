@@ -1,0 +1,27 @@
+# Ambiente virtuale
+.venv/
+venv/
+ENV/
+rocce_env/
+
+# File Python compilati
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribuzione / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Dataset e modelli (se sono grandi)
+dataset_rocce/*
+*.keras
+*.h5
+*.pth
+
+# Varie
+.DS_Store
