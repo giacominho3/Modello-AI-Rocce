@@ -1,8 +1,63 @@
 # Classificatore di Rocce con Intelligenza Artificiale
 
-## Introduzione
+## Configurazione rapida
 
-Questo progetto è un classificatore di immagini basato su intelligenza artificiale che permette di identificare automaticamente i tipi di rocce (sedimentarie, ignee, metamorfiche) a partire da fotografie. Il modello utilizza una rete neurale convoluzionale (CNN) per "imparare" le caratteristiche visive che distinguono i diversi tipi di rocce.
+### Installazione e configurazione
+
+1. **Clona questo repository**:
+   ```bash
+   git clone https://github.com/tuousername/classificatore-rocce.git
+   cd classificatore-rocce
+   ```
+
+2. **Esegui lo script di setup**:
+   ```bash
+   python setup.py
+   ```
+   Questo script creerà automaticamente un ambiente virtuale e installerà tutte le dipendenze necessarie.
+
+3. **Attiva l'ambiente virtuale**:
+   - Windows: `rocce_env\Scripts\activate`
+   - Mac/Linux: `source rocce_env/bin/activate`
+
+4. **Esegui il classificatore**:
+   ```bash
+   python classificatore_rocce.py
+   ```
+
+### Struttura del repository
+
+Il repository è organizzato nel seguente modo:
+```
+classificatore-rocce/
+├── README.md               # Questa guida
+├── requirements.txt        # File con le dipendenze
+├── classificatore_rocce.py # Il codice principale
+├── setup.py                # Script per preparare l'ambiente
+└── dataset_rocce/          # Cartella per il dataset (inizialmente vuota)
+    ├── sedimentarie/       # Immagini di rocce sedimentarie
+    ├── ignee/              # Immagini di rocce ignee
+    └── metamorfiche/       # Immagini di rocce metamorfiche
+```
+
+### Gestione del dataset
+
+Per il dataset di immagini hai due opzioni:
+
+1. **Creare il tuo dataset**:
+   - Raccogli immagini di rocce e organizzale nelle tre cartelle all'interno di `dataset_rocce/`
+   - Cerca di avere almeno 30-50 immagini per classe
+
+2. **Scaricare un dataset pre-fatto**:
+   - Scarica il dataset da [questo link] e scompattalo nella cartella `dataset_rocce`
+   - In alternativa, puoi eseguire lo script:
+     ```bash
+     python download_dataset.py
+     ```
+
+> **Nota**: È importante non includere l'ambiente virtuale (.venv, rocce_env) quando condividi il tuo progetto, in quanto è specifico per ogni macchina e molto pesante.
+
+---
 
 ## Indice
 1. [Concetti di base dell'intelligenza artificiale](#concetti-di-base-dellintelligenza-artificiale)
@@ -43,8 +98,6 @@ Nel nostro classificatore di rocce utilizziamo l'**apprendimento supervisionato*
 ### Cos'è una rete neurale artificiale?
 
 Una rete neurale artificiale è un modello computazionale ispirato al funzionamento del cervello umano. È composta da "neuroni" artificiali organizzati in strati che elaborano l'informazione.
-
-![Struttura di una rete neurale semplice](https://example.com/neural_network.png)
 
 **Analogia**: Pensa a una catena di montaggio in una fabbrica. Ogni operaio (neurone) esegue una piccola operazione e passa il risultato all'operaio successivo. Alla fine della catena, otteniamo il prodotto finito (la previsione).
 
@@ -156,19 +209,7 @@ Per utilizzare il classificatore avrai bisogno di:
 - Matplotlib
 - PIL (Pillow)
 
-### Installazione
-
-1. Crea un ambiente virtuale Python (raccomandato):
-   ```bash
-   python -m venv rocce_env
-   source rocce_env/bin/activate  # Linux/Mac
-   rocce_env\Scripts\activate     # Windows
-   ```
-
-2. Installa le dipendenze:
-   ```bash
-   pip install tensorflow numpy matplotlib pillow
-   ```
+Queste dipendenze saranno installate automaticamente dallo script `setup.py`.
 
 ### Struttura del dataset
 
@@ -282,7 +323,10 @@ R: Verifica che il modello sia stato addestrato correttamente e che stia carican
 R: Riduci il batch size o la dimensione delle immagini.
 
 **D: Problemi con le importazioni di TensorFlow/Keras.**  
-R: Assicurati di utilizzare versioni compatibili delle librerie. TensorFlow 2.12.0 è una versione stabile consigliata.
+R: Assicurati di utilizzare versioni compatibili delle librerie. TensorFlow 2.12.0 è una versione stabile consigliata. Usa lo script `setup.py` per configurare correttamente l'ambiente.
+
+**D: Git mostra errori quando provo a caricare il progetto su GitHub.**  
+R: Assicurati di non includere l'ambiente virtuale (rocce_env) o dataset molto grandi. Usa il file `.gitignore` fornito per escludere automaticamente questi file.
 
 ---
 
