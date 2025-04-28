@@ -1,20 +1,24 @@
 # Classificatore di Rocce con Intelligenza Artificiale
 
-## Configurazione rapida
+## Configurazione rapida (VERSIONE OFFLINE)
 
 ### Installazione e configurazione
 
-1. **Clona questo repository**:
-   ```bash
-   git clone https://github.com/tuousername/classificatore-rocce.git
-   cd classificatore-rocce
-   ```
+1. **Scarica i componenti necessari**:
+   - Clone o scarica questo repository
+   - Scarica il file `pacchetti_offline.zip` dalla [pagina delle release](https://github.com/tuousername/classificatore-rocce/releases)
+   - Posiziona `pacchetti_offline.zip` nella directory principale del progetto
 
 2. **Esegui lo script di setup**:
    ```bash
-   python setup.py
+   py setup.py
    ```
-   Questo script creerà automaticamente un ambiente virtuale e installerà tutte le dipendenze necessarie.
+   Questo script:
+   - Estrarrà automaticamente i pacchetti dall'archivio
+   - Creerà un ambiente virtuale
+   - Installerà tutte le dipendenze necessarie dai pacchetti locali
+   
+   **Nota**: Nessuna connessione internet richiesta!
 
 3. **Attiva l'ambiente virtuale**:
    - Windows: `rocce_env\Scripts\activate`
@@ -22,8 +26,11 @@
 
 4. **Esegui il classificatore**:
    ```bash
-   python classificatore_rocce.py
+   py classificatore_rocce.py
    ```
+
+5. **Alternativa semplificata** (solo Windows):
+   Fai doppio click sul file `avvia_classificatore.bat`
 
 ### Struttura del repository
 
@@ -33,12 +40,18 @@ classificatore-rocce/
 ├── README.md               # Questa guida
 ├── requirements.txt        # File con le dipendenze
 ├── classificatore_rocce.py # Il codice principale
+├── model.py                # Modulo con le funzioni del modello
 ├── setup.py                # Script per preparare l'ambiente
+├── scarica_pacchetti.py    # Script per gestire i pacchetti offline
+├── avvia_classificatore.bat # Script batch per avvio rapido (Windows)
+├── pacchetti_offline.zip   # Archivio con tutti i pacchetti necessari (da scaricare)
 └── dataset_rocce/          # Cartella per il dataset (inizialmente vuota)
     ├── sedimentarie/       # Immagini di rocce sedimentarie
     ├── ignee/              # Immagini di rocce ignee
     └── metamorfiche/       # Immagini di rocce metamorfiche
 ```
+
+> **Nota speciale per laboratori**: Il comando per eseguire Python in questo progetto è `py` invece di `python`. Questo è stato configurato appositamente per ambienti di laboratorio Windows dove Python è installato con questo comando.
 
 ### Gestione del dataset
 
@@ -48,14 +61,11 @@ Per il dataset di immagini hai due opzioni:
    - Raccogli immagini di rocce e organizzale nelle tre cartelle all'interno di `dataset_rocce/`
    - Cerca di avere almeno 30-50 immagini per classe
 
-2. **Scaricare un dataset pre-fatto**:
-   - Scarica il dataset da [questo link] e scompattalo nella cartella `dataset_rocce`
-   - In alternativa, puoi eseguire lo script:
-     ```bash
-     python download_dataset.py
-     ```
+2. **Utilizzare un dataset di esempio**:
+   - Se incluso nella distribuzione, troverai immagini di esempio nella cartella `dataset_esempio`
+   - Copia le immagini nelle rispettive cartelle all'interno di `dataset_rocce/`
 
-> **Nota**: È importante non includere l'ambiente virtuale (.venv, rocce_env) quando condividi il tuo progetto, in quanto è specifico per ogni macchina e molto pesante.
+> **Nota per ambienti con proxy**: Questa versione è stata specificamente preparata per funzionare in ambienti con proxy o firewall restrittivi, come laboratori didattici o aziendali. Non è necessaria alcuna connessione internet per installare o utilizzare il software.
 
 ---
 
@@ -204,12 +214,9 @@ Durante l'addestramento, monitoriamo queste metriche sia sul set di addestrament
 
 Per utilizzare il classificatore avrai bisogno di:
 - Python 3.8 o superiore
-- TensorFlow 2.x
-- NumPy
-- Matplotlib
-- PIL (Pillow)
+- Tutte le dipendenze sono già incluse nei pacchetti offline
 
-Queste dipendenze saranno installate automaticamente dallo script `setup.py`.
+Queste dipendenze saranno installate automaticamente dallo script `setup.py` usando i pacchetti precaricati.
 
 ### Struttura del dataset
 
@@ -298,6 +305,17 @@ Ecco alcuni esperimenti che potresti fare per migliorare il tuo modello:
 
 ## FAQ e problemi comuni
 
+### Problemi di installazione
+
+**D: Lo script segnala che 'pacchetti_offline.zip' non esiste.**  
+R: Devi scaricare il file dalla pagina delle release GitHub e posizionarlo nella directory principale del progetto.
+
+**D: Ricevo errori durante l'estrazione o l'installazione dei pacchetti.**  
+R: Assicurati di utilizzare Python 3.8 (consigliato) o versione compatibile. L'archivio potrebbe essere danneggiato, prova a riscaricarlo.
+
+**D: L'ambiente virtuale non si attiva correttamente.**  
+R: Su Windows, assicurati di eseguire `rocce_env\Scripts\activate` nel prompt dei comandi. Prova anche a usare il file batch `avvia_classificatore.bat` come alternativa.
+
 ### Problemi di addestramento
 
 **D: Il mio modello raggiunge alta accuratezza sul training set ma bassa sul validation set.**  
@@ -322,11 +340,8 @@ R: Verifica che il modello sia stato addestrato correttamente e che stia carican
 **D: Errori di memoria durante l'addestramento.**  
 R: Riduci il batch size o la dimensione delle immagini.
 
-**D: Problemi con le importazioni di TensorFlow/Keras.**  
-R: Assicurati di utilizzare versioni compatibili delle librerie. TensorFlow 2.12.0 è una versione stabile consigliata. Usa lo script `setup.py` per configurare correttamente l'ambiente.
-
-**D: Git mostra errori quando provo a caricare il progetto su GitHub.**  
-R: Assicurati di non includere l'ambiente virtuale (rocce_env) o dataset molto grandi. Usa il file `.gitignore` fornito per escludere automaticamente questi file.
+**D: Python non è riconosciuto come comando interno o esterno.**  
+R: Assicurati che Python sia installato correttamente e aggiunto al PATH di sistema.
 
 ---
 
@@ -360,4 +375,4 @@ Ricorda che l'apprendimento automatico, proprio come lo studio della geologia, r
 
 ---
 
-*Questo progetto è stato sviluppato per fini educativi. Non sostituisce l'expertise di un geologo professionista.*
+*Questo progetto è stato sviluppato per fini educativi e ottimizzato per funzionare in ambienti con accesso internet limitato. Non sostituisce l'expertise di un geologo professionista.*

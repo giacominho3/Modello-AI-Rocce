@@ -23,5 +23,8 @@ dataset_rocce/*
 *.h5
 *.pth
 
+# Escludi i pacchetti offline (troppo grandi per git)
+pacchetti_offline/
+
 # Varie
 .DS_Store
