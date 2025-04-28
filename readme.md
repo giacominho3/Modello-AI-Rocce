@@ -39,7 +39,7 @@ Il repository è organizzato nel seguente modo:
 classificatore-rocce/
 ├── README.md               # Questa guida
 ├── requirements.txt        # File con le dipendenze
-├── classificatore_rocce.py # Il codice principale
+├── classificatore_rocce.py # Il codice principale con interfaccia interattiva
 ├── model.py                # Modulo con le funzioni del modello
 ├── setup.py                # Script per preparare l'ambiente
 ├── scarica_pacchetti.py    # Script per gestire i pacchetti offline
@@ -213,7 +213,7 @@ Durante l'addestramento, monitoriamo queste metriche sia sul set di addestrament
 ### Prerequisiti
 
 Per utilizzare il classificatore avrai bisogno di:
-- Python 3.8 o superiore
+- Python 3.11 o superiore (ma inferiore a 3.13)
 - Tutte le dipendenze sono già incluse nei pacchetti offline
 
 Queste dipendenze saranno installate automaticamente dallo script `setup.py` usando i pacchetti precaricati.
@@ -237,44 +237,55 @@ dataset_rocce/
       └── ...
 ```
 
-### Addestramento del modello
+### Utilizzo del classificatore interattivo
 
-Per addestrare il modello da zero:
+Il classificatore offre un'interfaccia interattiva che puoi avviare con:
 
-```python
-# Prepara il dataset
-train_ds, val_ds, class_names = crea_dataset("dataset_rocce")
-
-# Crea e addestra il modello
-model = crea_modello_semplice(len(class_names))
-history = addestra_modello_base(model, train_ds, val_ds, epoche=15)
-
-# Visualizza i risultati
-visualizza_risultati_base(history)
-
-# Salva il modello
-salva_modello_base(model)
+```bash
+py classificatore_rocce.py
 ```
 
-### Utilizzo del modello addestrato
+Questo ti mostrerà un menu con le seguenti opzioni:
+1. **Addestra un nuovo modello** - Per creare e addestrare un modello sui dati nel dataset
+2. **Classifica un'immagine** - Per analizzare una nuova immagine
+3. **Visualizza informazioni sul modello** - Per dettagli sul modello e le classi
+4. **Esci** - Per terminare il programma
 
-Per classificare nuove immagini con un modello già addestrato:
+### Utilizzo dalla linea di comando
 
-```python
-# Carica il modello
-model = carica_modello_base()
+Puoi anche utilizzare il classificatore direttamente dalla linea di comando:
 
-# Classifica una nuova immagine
-risultato = predici_immagine_base(
-    model, 
-    "percorso/alla/tua/immagine.jpg", 
-    ["sedimentarie", "ignee", "metamorfiche"]
-)
+- Per addestrare un nuovo modello:
+  ```
+  py classificatore_rocce.py train
+  ```
 
-# Stampa il risultato
-print(f"Tipo di roccia: {risultato['class']}")
-print(f"Livello di confidenza: {risultato['confidence']:.2f}")
-```
+- Per classificare un'immagine:
+  ```
+  py classificatore_rocce.py predict percorso/alla/immagine.jpg
+  ```
+
+- Per informazioni sul modello:
+  ```
+  py classificatore_rocce.py info
+  ```
+
+### Esempi di utilizzo
+
+#### Addestramento di un nuovo modello
+
+1. Inserisci immagini nelle cartelle appropriate in `dataset_rocce/`
+2. Esegui `py classificatore_rocce.py`
+3. Seleziona l'opzione 1 per addestrare il modello
+4. Attendi il completamento dell'addestramento
+5. I risultati e i grafici verranno mostrati automaticamente
+
+#### Classificazione di una nuova immagine
+
+1. Esegui `py classificatore_rocce.py`
+2. Seleziona l'opzione 2 per classificare un'immagine
+3. Inserisci il percorso dell'immagine quando richiesto
+4. Il risultato della classificazione verrà mostrato con la percentuale di confidenza
 
 ---
 
@@ -311,7 +322,7 @@ Ecco alcuni esperimenti che potresti fare per migliorare il tuo modello:
 R: Devi scaricare il file dalla pagina delle release GitHub e posizionarlo nella directory principale del progetto.
 
 **D: Ricevo errori durante l'estrazione o l'installazione dei pacchetti.**  
-R: Assicurati di utilizzare Python 3.8 (consigliato) o versione compatibile. L'archivio potrebbe essere danneggiato, prova a riscaricarlo.
+R: Assicurati di utilizzare Python 3.11 (consigliato) o versione compatibile con TensorFlow 2.13.0. Versioni più recenti come Python 3.13 non sono compatibili.
 
 **D: L'ambiente virtuale non si attiva correttamente.**  
 R: Su Windows, assicurati di eseguire `rocce_env\Scripts\activate` nel prompt dei comandi. Prova anche a usare il file batch `avvia_classificatore.bat` come alternativa.
